@@ -4,6 +4,7 @@ sudo apt-get update -y
 sudo apt-get upgrade -y
 sudo apt-get install -y git curl chromium
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+sleep 5
 source ~/.bashrc
 source ~/.bashrc
 source ~/.bashrc
@@ -16,5 +17,4 @@ git clone https://github.com/Awedtan/HellaBot.git
 cd HellaBot
 npm install --save
 node node_modules/puppeteer/install.js
-git clone https://github.com/Kengxxiao/ArknightsGameData.git
 ls

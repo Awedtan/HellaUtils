@@ -11,15 +11,6 @@ if [ ! $LOCAL = $REMOTE ]; then
     bool=1
     echo "$(date) - Bot updated" >> ../log
 fi
-cd ArknightsGameData
-git fetch
-LOCAL=$(git rev-parse @)
-REMOTE=$(git rev-parse @{u})
-if [ ! $LOCAL = $REMOTE ]; then
-    git merge
-    bool=1
-    echo "$(date) - Game data updated" >> ../../log
-fi
 if [ "$bool" -eq 1 ]; then
     sleep 5
     pm2 flush

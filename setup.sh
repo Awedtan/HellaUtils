@@ -11,7 +11,11 @@ source $NVM_DIR/nvm.sh;
 nvm install 18
 npm install -g pm2 ts-node
 git clone https://github.com/Awedtan/HellaBot.git
+git clone https://github.com/Awedtan/HellaAPI.git
 cd HellaBot
 npm install --save
 node node_modules/puppeteer/install.js
+cd ../HellaAPI
+npm install --save
+cd ..
 ls

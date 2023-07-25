@@ -6,12 +6,9 @@ sudo apt-get install -y git curl chromium
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 sleep 5
 source ~/.bashrc
-source ~/.bashrc
-source ~/.bashrc
+export NVM_DIR=$HOME/.nvm;
+source $NVM_DIR/nvm.sh;
 nvm install 18
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 npm install -g pm2 ts-node
 git clone https://github.com/Awedtan/HellaBot.git
 cd HellaBot

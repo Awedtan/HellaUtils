@@ -6,6 +6,7 @@ SAVEDHEAD=$(cat head)
 if [[ ! $CURRENTHEAD = $SAVEDHEAD ]]; then
     git ls-remote https://github.com/Kengxxiao/ArknightsGameData.git HEAD > head
     cd HellaAPI
+    git pull
     node src/loadDb.js >> ../log
     echo "$(date) - DB updated" >> ../log
     cd ..

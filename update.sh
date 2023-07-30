@@ -6,7 +6,8 @@ SAVEDHEAD=$(cat head)
 if [[ ! $CURRENTHEAD = $SAVEDHEAD ]]; then
     git ls-remote https://github.com/Kengxxiao/ArknightsGameData.git HEAD > head
     cd HellaAPI
-    git pull
+    git fetch
+    git merge
     node src/loadDb.js >> ../log
     echo "$(date) - DB updated" >> ../log
     cd ..
@@ -20,6 +21,7 @@ LOCAL=$(git rev-parse @)
 REMOTE=$(git rev-parse @{u})
 if [[ ! $LOCAL = $REMOTE ]]; then
     git merge
+    npm ci
     bool=1
     echo "$(date) - Bot updated" >> ../log
 fi

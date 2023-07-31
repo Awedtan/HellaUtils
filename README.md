@@ -9,6 +9,11 @@ pm2 flush hellabot
 crontab -e
 tail -f log.txt
 git reset --hard
+
+count files in folders:
+find . -type d -exec bash -c "echo -ne '{} '; ls '{}' | wc -l" \;
+
+
 ```
 
 # Sample db load

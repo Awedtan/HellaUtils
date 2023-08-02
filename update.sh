@@ -8,7 +8,7 @@ if [[ ! $CURRENTHEAD = $SAVEDHEAD ]]; then
     cd HellaAPI
     git fetch
     git merge
-    node src/loadDb.js >> ../log
+    node src/utils/loadDb.js >> ../log
     echo "$(date) - DB updated" >> ../log
     cd ..
 fi
@@ -28,6 +28,6 @@ fi
 if [ "$bool" -eq 1 ]; then
     sleep 5
     pm2 flush
-    pm2 restart hellabot >> ../log
+    pm2 restart hellabot
     echo "$(date) - Bot restarted" >> ../log
 fi

@@ -19,3 +19,4 @@ cd ../HellaAPI
 npm install --save
 cd ..
 ls
+echo "Setup complete!"

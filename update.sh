@@ -8,6 +8,7 @@ if [[ ! $CURRENTHEAD = $SAVEDHEAD ]]; then
     cd HellaAPI
     git fetch
     git merge
+    echo "$(date) - Start DB update" >> ../log
     node src/utils/loadDb.js >> ../log
     echo "$(date) - DB updated" >> ../log
     echo
@@ -23,6 +24,7 @@ if [[ ! $LOCAL = $REMOTE ]]; then
     git merge
     npm ci
     sleep 5
+    echo "$(date) - Start bot update" >> ../log
     pm2 flush
     pm2 restart hellabot
     echo "$(date) - Bot updated" >> ../log

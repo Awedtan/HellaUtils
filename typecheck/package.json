@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "start": "ts-node index.ts > log"
+  },
+  "dependencies": {
+    "@types/node": "^20.10.6",
+    "dotenv": "^16.3.1",
+    "fp-ts": "^2.16.1",
+    "hella-types": "^0.0.7",
+    "io-ts": "^2.2.21",
+    "mongodb": "^6.3.0",
+    "ts-node": "^10.9.2"
+  }
+}

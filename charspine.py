@@ -6,6 +6,7 @@ expDir = 'exported'
 
 for file in os.listdir(srcDir):
     try:
+        # if file != 'char_194_leto.ab': continue
         if not file.endswith('.ab'): continue
 
         env = UnityPy.load(os.path.join(srcDir, file))
@@ -30,8 +31,13 @@ for file in os.listdir(srcDir):
             charATree = charA.read_typetree()
             if any(value not in charATree.keys() for value in ['_animations', '_spineSkins']): continue
 
+            # new spines no longer have alpha textures?
+            # transparency seems to be baked into the main texture now
             def readFromPathId(parent, list):
-                return next(obj for obj in list if obj.read().path_id == parent['m_PathID']).read()
+                try:
+                    return next(obj for obj in list if obj.read().path_id == parent['m_PathID']).read()
+                except:
+                    return None
             
             # Char has both front and back spine
             if(charATree.get('_front') and charATree.get('_back')):
@@ -73,12 +79,14 @@ for file in os.listdir(srcDir):
 
                 open(f'{fDir}/{fSkelFile.name}', 'wb').write(fSkelFile.script)
                 open(f'{fDir}/{fAtlasFile.name}', 'wb').write(fAtlasFile.script)
-                fAlphaTex.image.save(f'{fDir}/{fAlphaTex.name}.png')
+                if fAlphaTex is not None:
+                    fAlphaTex.image.save(f'{fDir}/{fAlphaTex.name}.png')
                 fMainTex.image.save(f'{fDir}/{fMainTex.name}.png')
 
                 open(f'{bDir}/{bSkelFile.name}', 'wb').write(bSkelFile.script)
                 open(f'{bDir}/{bAtlasFile.name}', 'wb').write(bAtlasFile.script)
-                bAlphaTex.image.save(f'{bDir}/{bAlphaTex.name}.png')
+                if bAlphaTex is not None:
+                    bAlphaTex.image.save(f'{bDir}/{bAlphaTex.name}.png')
                 bMainTex.image.save(f'{bDir}/{bMainTex.name}.png')
             # Char has only front spine
             else:
@@ -105,7 +113,8 @@ for file in os.listdir(srcDir):
 
                 open(f'{fDir}/{fSkelFile.name}', 'wb').write(fSkelFile.script)
                 open(f'{fDir}/{fAtlasFile.name}', 'wb').write(fAtlasFile.script)
-                fAlphaTex.image.save(f'{fDir}/{fAlphaTex.name}.png')
+                if fAlphaTex is not None:
+                    fAlphaTex.image.save(f'{fDir}/{fAlphaTex.name}.png')
                 fMainTex.image.save(f'{fDir}/{fMainTex.name}.png')
     except:
         print(f'Error: {file}')

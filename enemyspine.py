@@ -2,7 +2,7 @@ import os
 import re
 import shutil
 
-source_directory = "enemies"
+source_directory = "enemy"
 
 for item in os.listdir(source_directory):
     item_path = os.path.join(source_directory, item)

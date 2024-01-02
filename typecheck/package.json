@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "ts-node index.ts > log"
+    "start": "ts-node index.ts"
   },
   "dependencies": {
     "@types/node": "^20.10.6",

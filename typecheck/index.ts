@@ -1,8 +1,7 @@
-import { BaseIO, CCStageIO, DefinitionIO, EnemyIO, GameEventIO, ItemIO, ModuleIO, OperatorIO, ParadoxIO, GridRangeIO, RogueThemeIO, SandboxActIO, SkillIO, SkinIO, StageIO, StageDataIO } from "hella-types";
+import { BaseZod, CCStageZod, DefinitionZod, EnemyZod, GameEventZod, GridRangeZod, ItemZod, ModuleZod, OperatorZod, ParadoxZod, RogueThemeZod, SandboxActZod, SkillZod, SkinZod, StageZod } from "hella-types";
 import { MongoClient } from "mongodb";
 import 'dotenv/config';
-import { PathReporter } from 'io-ts/PathReporter'
-import fs from 'fs';
+import * as fs from 'fs';
 
 const logPath = 'log.txt';
 fs.writeFileSync(logPath, '');
@@ -17,20 +16,23 @@ async function main() {
     const baseCollection = db.collection("baseskills");
     const baseResults = await baseCollection.find({}).toArray();
     for (const base of baseResults) {
-        const result = BaseIO.decode(base.value);
-        if (result._tag === "Left") {
+        try {
+            BaseZod.parse(base.value);
+        } catch (e: any) {
             log('Base type conformity error: ' + base.keys + '\n');
-            log(PathReporter.report(result).join('\n'));
+            log(e);
+            break;
         }
     }
     console.log('ccstages');
     const ccCollection = db.collection("ccstages");
     const ccResults = await ccCollection.find({}).toArray();
     for (const cc of ccResults) {
-        const result = CCStageIO.decode(cc.value);
-        if (result._tag === "Left") {
-            log('CC stage type conformity error: ' + cc.keys + '\n');
-            log(PathReporter.report(result).join('\n'));
+        try {
+            CCStageZod.parse(cc.value);
+        } catch (e: any) {
+            log('CC type conformity error: ' + cc.keys + '\n');
+            log(e);
             break;
         }
     }
@@ -38,10 +40,11 @@ async function main() {
     const definitionCollection = db.collection("definitions");
     const definitionResults = await definitionCollection.find({}).toArray();
     for (const definition of definitionResults) {
-        const result = DefinitionIO.decode(definition.value);
-        if (result._tag === "Left") {
+        try {
+            DefinitionZod.parse(definition.value);
+        } catch (e: any) {
             log('Definition type conformity error: ' + definition.keys + '\n');
-            log(PathReporter.report(result).join('\n'));
+            log(e);
             break;
         }
     }
@@ -49,10 +52,11 @@ async function main() {
     const enemyCollection = db.collection("enemies");
     const enemyResults = await enemyCollection.find({}).toArray();
     for (const enemy of enemyResults) {
-        const result = EnemyIO.decode(enemy.value);
-        if (result._tag === "Left") {
+        try {
+            EnemyZod.parse(enemy.value);
+        } catch (e: any) {
             log('Enemy type conformity error: ' + enemy.keys + '\n');
-            log(PathReporter.report(result).join('\n'));
+            log(e);
             break;
         }
     }
@@ -60,10 +64,11 @@ async function main() {
     const gameEventCollection = db.collection("events");
     const gameEventResults = await gameEventCollection.find({}).toArray();
     for (const gameEvent of gameEventResults) {
-        const result = GameEventIO.decode(gameEvent.value);
-        if (result._tag === "Left") {
+        try {
+            GameEventZod.parse(gameEvent.value);
+        } catch (e: any) {
             log('Game event type conformity error: ' + gameEvent.keys + '\n');
-            log(PathReporter.report(result).join('\n'));
+            log(e);
             break;
         }
     }
@@ -71,10 +76,11 @@ async function main() {
     const itemCollection = db.collection("items");
     const itemResults = await itemCollection.find({}).toArray();
     for (const item of itemResults) {
-        const result = ItemIO.decode(item.value);
-        if (result._tag === "Left") {
+        try {
+            ItemZod.parse(item.value);
+        } catch (e: any) {
             log('Item type conformity error: ' + item.keys + '\n');
-            log(PathReporter.report(result).join('\n'));
+            log(e);
             break;
         }
     }
@@ -82,10 +88,11 @@ async function main() {
     const moduleCollection = db.collection("modules");
     const moduleResults = await moduleCollection.find({}).toArray();
     for (const module of moduleResults) {
-        const result = ModuleIO.decode(module.value);
-        if (result._tag === "Left") {
+        try {
+            ModuleZod.parse(module.value);
+        } catch (e: any) {
             log('Module type conformity error: ' + module.keys + '\n');
-            log(PathReporter.report(result).join('\n'));
+            log(e);
             break;
         }
     }
@@ -93,10 +100,11 @@ async function main() {
     const operatorCollection = db.collection("operators");
     const operatorResults = await operatorCollection.find({}).toArray();
     for (const operator of operatorResults) {
-        const result = OperatorIO.decode(operator.value);
-        if (result._tag === "Left") {
+        try {
+            OperatorZod.parse(operator.value);
+        } catch (e: any) {
             log('Operator type conformity error: ' + operator.keys + '\n');
-            log(PathReporter.report(result).join('\n'));
+            log(e);
             break;
         }
     }
@@ -104,10 +112,11 @@ async function main() {
     const paradoxCollection = db.collection("paradoxes");
     const paradoxResults = await paradoxCollection.find({}).toArray();
     for (const paradox of paradoxResults) {
-        const result = ParadoxIO.decode(paradox.value);
-        if (result._tag === "Left") {
+        try {
+            ParadoxZod.parse(paradox.value);
+        } catch (e: any) {
             log('Paradox type conformity error: ' + paradox.keys + '\n');
-            log(PathReporter.report(result).join('\n'));
+            log(e);
             break;
         }
     }
@@ -115,10 +124,11 @@ async function main() {
     const rangeCollection = db.collection("ranges");
     const rangeResults = await rangeCollection.find({}).toArray();
     for (const range of rangeResults) {
-        const result = GridRangeIO.decode(range.value);
-        if (result._tag === "Left") {
+        try {
+            GridRangeZod.parse(range.value);
+        } catch (e: any) {
             log('Range type conformity error: ' + range.keys + '\n');
-            log(PathReporter.report(result).join('\n'));
+            log(e);
             break;
         }
     }
@@ -126,10 +136,11 @@ async function main() {
     const rogueThemeCollection = db.collection("roguethemes");
     const rogueThemeResults = await rogueThemeCollection.find({}).toArray();
     for (const rogueTheme of rogueThemeResults) {
-        const result = RogueThemeIO.decode(rogueTheme.value);
-        if (result._tag === "Left") {
+        try {
+            RogueThemeZod.parse(rogueTheme.value);
+        } catch (e: any) {
             log('Rogue theme type conformity error: ' + rogueTheme.keys + '\n');
-            log(PathReporter.report(result).join('\n'));
+            log(e);
             break;
         }
     }
@@ -137,10 +148,11 @@ async function main() {
     const sandboxActCollection = db.collection("sandboxes");
     const sandboxActResults = await sandboxActCollection.find({}).toArray();
     for (const sandboxAct of sandboxActResults) {
-        const result = SandboxActIO.decode(sandboxAct.value);
-        if (result._tag === "Left") {
-            log('Sandbox act type conformity error: ' + sandboxAct.keys + '\n');
-            log(PathReporter.report(result).join('\n'));
+        try {
+            SandboxActZod.parse(sandboxAct.value);
+        } catch (e: any) {
+            log('Sandbox type conformity error: ' + sandboxAct.keys + '\n');
+            log(e);
             break;
         }
     }
@@ -148,10 +160,11 @@ async function main() {
     const skillCollection = db.collection("skills");
     const skillResults = await skillCollection.find({}).toArray();
     for (const skill of skillResults) {
-        const result = SkillIO.decode(skill.value);
-        if (result._tag === "Left") {
+        try {
+            SkillZod.parse(skill.value);
+        } catch (e: any) {
             log('Skill type conformity error: ' + skill.keys + '\n');
-            log(PathReporter.report(result).join('\n'));
+            log(e);
             break;
         }
     }
@@ -159,14 +172,18 @@ async function main() {
     const skinCollection = db.collection("skins");
     const skinResults = await skinCollection.find({}).toArray();
     for (const skins of skinResults) {
+        let stop = false;
         for (const skin of skins.value) {
-            const result = SkinIO.decode(skin);
-            if (result._tag === "Left") {
+            try {
+                SkinZod.parse(skin);
+            } catch (e: any) {
                 log('Skin type conformity error: ' + skins.keys + '\n');
-                log(PathReporter.report(result).join('\n'));
+                log(e);
+                stop = true;
                 break;
             }
         }
+        if (stop) break;
     }
     console.log('stages');
     const stageCollection = db.collection("stages");
@@ -174,10 +191,11 @@ async function main() {
     for (const stages of stageResults) {
         let stop = false;
         for (const stage of stages.value) {
-            const result = StageIO.decode(stage);
-            if (result._tag === "Left") {
+            try {
+                StageZod.parse(stage);
+            } catch (e: any) {
                 log('Stage type conformity error: ' + stages.keys + '\n');
-                log(PathReporter.report(result).join('\n'));
+                log(e);
                 stop = true;
                 break;
             }
@@ -190,10 +208,11 @@ async function main() {
     for (const stages of toughResults) {
         let stop = false;
         for (const stage of stages.value) {
-            const result = StageIO.decode(stage);
-            if (result._tag === "Left") {
+            try {
+                StageZod.parse(stage);
+            } catch (e: any) {
                 log('Tough stage type conformity error: ' + stages.keys + '\n');
-                log(PathReporter.report(result).join('\n'));
+                log(e);
                 stop = true;
                 break;
             }

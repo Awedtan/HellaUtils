@@ -14,7 +14,7 @@ async function main() {
 
     console.log('base');
     const baseCollection = db.collection("baseskills");
-    const baseResults = await baseCollection.find({}).toArray();
+    const baseResults = await baseCollection.find().toArray();
     for (const base of baseResults) {
         try {
             BaseZod.parse(base.value);
@@ -26,7 +26,7 @@ async function main() {
     }
     console.log('ccstages');
     const ccCollection = db.collection("ccstages");
-    const ccResults = await ccCollection.find({}).toArray();
+    const ccResults = await ccCollection.find().toArray();
     for (const cc of ccResults) {
         try {
             CCStageZod.parse(cc.value);
@@ -38,7 +38,7 @@ async function main() {
     }
     console.log('definitions');
     const definitionCollection = db.collection("definitions");
-    const definitionResults = await definitionCollection.find({}).toArray();
+    const definitionResults = await definitionCollection.find().toArray();
     for (const definition of definitionResults) {
         try {
             DefinitionZod.parse(definition.value);
@@ -50,7 +50,7 @@ async function main() {
     }
     console.log('enemies');
     const enemyCollection = db.collection("enemies");
-    const enemyResults = await enemyCollection.find({}).toArray();
+    const enemyResults = await enemyCollection.find().toArray();
     for (const enemy of enemyResults) {
         try {
             EnemyZod.parse(enemy.value);
@@ -62,7 +62,7 @@ async function main() {
     }
     console.log('events');
     const gameEventCollection = db.collection("events");
-    const gameEventResults = await gameEventCollection.find({}).toArray();
+    const gameEventResults = await gameEventCollection.find().toArray();
     for (const gameEvent of gameEventResults) {
         try {
             GameEventZod.parse(gameEvent.value);
@@ -74,7 +74,7 @@ async function main() {
     }
     console.log('items');
     const itemCollection = db.collection("items");
-    const itemResults = await itemCollection.find({}).toArray();
+    const itemResults = await itemCollection.find().toArray();
     for (const item of itemResults) {
         try {
             ItemZod.parse(item.value);
@@ -86,7 +86,7 @@ async function main() {
     }
     console.log('modules');
     const moduleCollection = db.collection("modules");
-    const moduleResults = await moduleCollection.find({}).toArray();
+    const moduleResults = await moduleCollection.find().toArray();
     for (const module of moduleResults) {
         try {
             ModuleZod.parse(module.value);
@@ -98,7 +98,7 @@ async function main() {
     }
     console.log('operators');
     const operatorCollection = db.collection("operators");
-    const operatorResults = await operatorCollection.find({}).toArray();
+    const operatorResults = await operatorCollection.find().toArray();
     for (const operator of operatorResults) {
         try {
             OperatorZod.parse(operator.value);
@@ -110,7 +110,7 @@ async function main() {
     }
     console.log('paradoxes');
     const paradoxCollection = db.collection("paradoxes");
-    const paradoxResults = await paradoxCollection.find({}).toArray();
+    const paradoxResults = await paradoxCollection.find().toArray();
     for (const paradox of paradoxResults) {
         try {
             ParadoxZod.parse(paradox.value);
@@ -122,7 +122,7 @@ async function main() {
     }
     console.log('ranges');
     const rangeCollection = db.collection("ranges");
-    const rangeResults = await rangeCollection.find({}).toArray();
+    const rangeResults = await rangeCollection.find().toArray();
     for (const range of rangeResults) {
         try {
             GridRangeZod.parse(range.value);
@@ -134,7 +134,7 @@ async function main() {
     }
     console.log('rogue themes');
     const rogueThemeCollection = db.collection("roguethemes");
-    const rogueThemeResults = await rogueThemeCollection.find({}).toArray();
+    const rogueThemeResults = await rogueThemeCollection.find().toArray();
     for (const rogueTheme of rogueThemeResults) {
         try {
             RogueThemeZod.parse(rogueTheme.value);
@@ -146,7 +146,7 @@ async function main() {
     }
     console.log('sandboxes');
     const sandboxActCollection = db.collection("sandboxes");
-    const sandboxActResults = await sandboxActCollection.find({}).toArray();
+    const sandboxActResults = await sandboxActCollection.find().toArray();
     for (const sandboxAct of sandboxActResults) {
         try {
             SandboxActZod.parse(sandboxAct.value);
@@ -158,7 +158,7 @@ async function main() {
     }
     console.log('skills');
     const skillCollection = db.collection("skills");
-    const skillResults = await skillCollection.find({}).toArray();
+    const skillResults = await skillCollection.find().toArray();
     for (const skill of skillResults) {
         try {
             SkillZod.parse(skill.value);
@@ -170,7 +170,7 @@ async function main() {
     }
     console.log('skins');
     const skinCollection = db.collection("skins");
-    const skinResults = await skinCollection.find({}).toArray();
+    const skinResults = await skinCollection.find().toArray();
     for (const skins of skinResults) {
         let stop = false;
         for (const skin of skins.value) {
@@ -187,7 +187,7 @@ async function main() {
     }
     console.log('stages');
     const stageCollection = db.collection("stages");
-    const stageResults = await stageCollection.find({}).toArray();
+    const stageResults = await stageCollection.find().toArray();
     for (const stages of stageResults) {
         let stop = false;
         for (const stage of stages.value) {
@@ -204,7 +204,7 @@ async function main() {
     }
     console.log('tough stages');
     const toughCollection = db.collection("toughstages");
-    const toughResults = await toughCollection.find({}).toArray();
+    const toughResults = await toughCollection.find().toArray();
     for (const stages of toughResults) {
         let stop = false;
         for (const stage of stages.value) {

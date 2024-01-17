@@ -3,9 +3,9 @@
     "start": "ts-node index.ts"
   },
   "dependencies": {
-    "@types/node": "^20.11.0",
+    "@types/node": "^20.11.5",
     "dotenv": "^16.3.1",
-    "hella-types": "^0.0.9",
+    "hella-types": "^0.0.10",
     "mongodb": "^6.3.0",
     "ts-node": "^10.9.2",
     "zod": "^3.22.4"

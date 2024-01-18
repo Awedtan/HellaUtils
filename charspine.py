@@ -26,10 +26,13 @@ for file in os.listdir(srcDir):
                 case 'Texture2D':
                     texture2ds.append(obj)
 
+        count = 0
         for mono in monobehaviours:
             charA = mono.read()
             charATree = charA.read_typetree()
-            if any(value not in charATree.keys() for value in ['_animations', '_spineSkins']): continue
+            if any(value not in charATree.keys() for value in ['_animations', '_spineScale']): continue
+
+            count += 1
 
             # new spines no longer have alpha textures?
             # transparency seems to be baked into the main texture now
@@ -65,7 +68,7 @@ for file in os.listdir(srcDir):
                     elif tex[0] == '_MainTex':
                         bMainTex = readFromPathId(tex[1]['m_Texture'], texture2ds)
 
-                charName = file.split('.ab')[0]
+                charName = fMainTex.name
                 fDir = f'{expDir}/{charName}/front'
                 bDir = f'{expDir}/{charName}/back'
                 if not os.path.exists(expDir):
@@ -102,7 +105,7 @@ for file in os.listdir(srcDir):
                     elif tex[0] == '_MainTex':
                         fMainTex = readFromPathId(tex[1]['m_Texture'], texture2ds)
 
-                charName = file.split('.ab')[0]
+                charName = fMainTex.name
                 fDir = f'{expDir}/{charName}/front'
                 if not os.path.exists(expDir):
                     os.mkdir(expDir)
@@ -116,6 +119,9 @@ for file in os.listdir(srcDir):
                 if fAlphaTex is not None:
                     fAlphaTex.image.save(f'{fDir}/{fAlphaTex.name}.png')
                 fMainTex.image.save(f'{fDir}/{fMainTex.name}.png')
+
+        if count == 0:
+            print(f'Nothing was found for: {file}')
     except:
         print(f'Error: {file}')
         continue

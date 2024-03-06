@@ -8,11 +8,11 @@ sleep 5
 source ~/.bashrc
 export NVM_DIR=$HOME/.nvm;
 source $NVM_DIR/nvm.sh;
-nvm install 18
+nvm install 18.19.1
 npm install -g pm2 ts-node
 git clone https://github.com/Awedtan/HellaBot.git
 git clone https://github.com/Awedtan/HellaAPI.git
-(cd HellaBot && npm install --save)
-(cd HellaAPI && npm install --save)
-ls
+(cd HellaBot && npm i)
+#node node_modules/puppeteer/install.mjs
+(cd ../HellaAPI && npm i)
 echo "Setup complete!"

@@ -1,17 +1,18 @@
 #!/bin/bash
-export PATH=$PATH:/home/daniel8su/.nvm/versions/node/v18.16.1/bin
-
-cd HellaAPI
+export PATH="/usr/bin:/home/daniel/.nvm/versions/node/v18.19.1/bin"
 
 LOCAL=$(cat head)
 REMOTE=$(git ls-remote https://github.com/Kengxxiao/ArknightsGameData_YoStar.git HEAD)
 if [[ ! $LOCAL = $REMOTE ]]; then
+    echo "$(date) - Start DB update - $REMOTE"
     git ls-remote https://github.com/Kengxxiao/ArknightsGameData_YoStar.git HEAD > head
+    cd HellaAPI
+    git restore .
     git fetch
     git merge
     npm ci
     sleep 5
-    echo "$(date) - Start DB update - $REMOTE"
-    node src/utils/loadDb.js
+    npm run load
     echo "$(date) - DB updated"
+    echo
 fi

@@ -14,5 +14,5 @@ if [[ ! $LOCAL = $REMOTE ]]; then
     sleep 5
     npm run load
     echo "$(date) - DB updated"
-    echo
+    echo "----------"
 fi

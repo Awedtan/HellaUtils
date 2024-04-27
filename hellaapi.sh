@@ -1,0 +1,2 @@
+cd HellaAPI
+npm start

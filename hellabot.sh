@@ -1,1 +1,2 @@
-npx ts-node -T HellaBot/src/index.ts
+cd HellaBot
+npm start

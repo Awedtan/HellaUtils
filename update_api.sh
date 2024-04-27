@@ -1,19 +1,19 @@
 #!/bin/bash
 export PATH="/usr/bin:/home/daniel/.nvm/versions/node/v18.19.1/bin"
 
-cd HellaBot
+cd HellaAPI
 
 git fetch
 LOCAL=$(git rev-parse @)
 REMOTE=$(git rev-parse @{upstream})
 if [[ ! $LOCAL = $REMOTE ]]; then
-    echo "$(date) - Start bot update - $REMOTE"
+    echo "$(date) - Start API update - $REMOTE"
     git restore .
     git merge
     npm ci
     sleep 5
-    pm2 flush hellabot
-    pm2 restart hellabot
-    echo "$(date) - Bot updated"
+    pm2 flush hellaapi
+    pm2 restart hellaapi
+    echo "$(date) - API updated"
     echo "----------"
 fi

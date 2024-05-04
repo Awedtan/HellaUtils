@@ -6,6 +6,7 @@ https://github.com/isHarryh/Ark-Unpacker
 
 ## locations
 - rogue items: `Android/spritepack/*.ab`
+- sandbox stage previews: `Android/spritepack/*.ab`
 - skin groups: `APK/ui/skin_groups.ab`
 - char spine: `*/chararts/*.ab`
 - char skin spines: `Android/skinpack/*.ab`

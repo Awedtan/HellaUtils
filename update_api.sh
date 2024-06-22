@@ -1,6 +1,12 @@
 #!/bin/bash
 export PATH="/usr/bin:/home/daniel/.nvm/versions/node/v18.19.1/bin"
 
+if [ -e "/tmp/api" ]; then
+    exit
+else
+    touch "/tmp/api"
+fi
+
 cd HellaAPI
 
 git fetch
@@ -15,5 +21,7 @@ if [[ ! $LOCAL = $REMOTE ]]; then
     pm2 flush hellaapi
     pm2 restart hellaapi
     echo "$(date) - API updated"
-    echo "----------"
+    echo "======================="
 fi
+
+rm "/tmp/api"

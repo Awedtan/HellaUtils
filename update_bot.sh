@@ -1,6 +1,12 @@
 #!/bin/bash
 export PATH="/usr/bin:/home/daniel/.nvm/versions/node/v18.19.1/bin"
 
+if [ -e "/tmp/bot" ]; then
+    exit
+else
+    touch "/tmp/bot"
+fi
+
 cd HellaBot
 
 git fetch
@@ -15,5 +21,7 @@ if [[ ! $LOCAL = $REMOTE ]]; then
     pm2 flush hellabot
     pm2 restart hellabot
     echo "$(date) - Bot updated"
-    echo "----------"
+    echo "======================="
 fi
+
+rm "/tmp/bot"

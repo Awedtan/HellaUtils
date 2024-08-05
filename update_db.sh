@@ -7,11 +7,11 @@ else
     touch "/tmp/db"
 fi
 
-LOCAL=$(cat "/tmp/yostar_head")
-REMOTE=$(git ls-remote "https://github.com/Kengxxiao/ArknightsGameData_YoStar.git" HEAD)
-if [[ ! $LOCAL = $REMOTE ]]; then
+LOCAL=$(cat "scripts/yostar_head" | awk '{print $1}')
+REMOTE=$(git ls-remote "https://github.com/Kengxxiao/ArknightsGameData_YoStar.git" HEAD | awk '{print $1}')
+if [[ $LOCAL != $REMOTE ]]; then
     echo "$(date) - Start DB update - $REMOTE"
-    echo $REMOTE > "/tmp/yostar_head"
+    echo $REMOTE > "scripts/yostar_head"
     cd HellaAPI/ArknightsGameData_YoStar
     git fetch
     git checkout main

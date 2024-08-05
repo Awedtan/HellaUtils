@@ -1,3 +1,5 @@
 .env
 node_modules/
 typecheck/log.txt
+apk_url
+yostar_head

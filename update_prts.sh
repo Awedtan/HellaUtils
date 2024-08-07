@@ -13,7 +13,7 @@ LOCAL=$(git rev-parse @)
 REMOTE=$(git rev-parse @{upstream})
 if [[ ! $LOCAL = $REMOTE ]]; then
     echo "$(date) - Start PRTS update - $REMOTE"
-    git restore .
+    git reset --hard
     git merge
     echo "$(date) - PRTS updated"
     echo "======================="

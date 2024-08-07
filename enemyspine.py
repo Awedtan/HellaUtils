@@ -1,8 +1,9 @@
 import os
 import re
 import shutil
+import sys
 
-source_directory = "enemy"
+source_directory = sys.argv[1] if sys.argv[1] else '.'
 
 for item in os.listdir(source_directory):
     item_path = os.path.join(source_directory, item)

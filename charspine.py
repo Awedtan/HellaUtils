@@ -1,8 +1,9 @@
 import os
+import sys
 import UnityPy
 
-srcDir = 'chararts'
-expDir = 'exported'
+srcDir = sys.argv[1] if sys.argv[1] else '.'
+expDir = sys.argv[2] if sys.argv[2] else 'exported'
 batDir = f'{expDir}/battle'
 buiDir = f'{expDir}/build'
 

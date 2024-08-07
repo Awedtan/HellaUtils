@@ -14,7 +14,7 @@ LOCAL=$(git rev-parse @)
 REMOTE=$(git rev-parse @{upstream})
 if [[ ! $LOCAL = $REMOTE ]]; then
     echo "$(date) - Start bot update - $REMOTE"
-    git restore .
+    git reset --hard
     git merge
     npm ci
     sleep 5

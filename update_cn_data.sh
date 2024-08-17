@@ -77,6 +77,7 @@ if [[ $LOCAL != $REMOTE ]]; then
     # venv/bin/pip install unitypy numpy
 
     mkdir -p $FOLDER/assets/sandboxstages $FOLDER/extracted/sandboxstages
+    mkdir $FOLDER/assets/sandboxitems $FOLDER/extracted/sandboxitems
     mkdir $FOLDER/assets/rogueitems $FOLDER/extracted/rogueitems
     mkdir $FOLDER/assets/skingroups $FOLDER/extracted/skingroups
     mkdir -p $FOLDER/assets/spine/operator $FOLDER/extracted/spine/operator
@@ -121,6 +122,12 @@ if [[ $LOCAL != $REMOTE ]]; then
     cp -f $FOLDER/apk/assets/AB/Android/arts/ui/stage_mappreview*.ab $FOLDER/assets/stages
     cp -f $FOLDER/Android/arts/ui/stage_mappreview*.ab $FOLDER/assets/stages
     AssetStudioModCLI $FOLDER/assets/stages -t sprite -g none --log-level warning -o $FOLDER/extracted/stages
+
+    cp -f $FOLDER/Android/ui/sandboxperm/[uc]common.ab $FOLDER/assets/sandboxitems
+    AssetStudioModCLI $FOLDER/assets/sandboxitems --filter-by-text itemicon -t sprite -g none --log-level warning -o $FOLDER/extracted/sandboxitems
+
+    cp -f $FOLDER/Android/ui/sandboxv2/topics/[uc]sandbox_1.ab $FOLDER/assets/sandboxweather
+    AssetStudioModCLI $FOLDER/assets/sandboxweather --filter-by-text weathertypeicons -t sprite -g none --log-level warning -o $FOLDER/extracted/sandboxweather
 
     BRANCH=cn-$DATE
     cd HellaAssets

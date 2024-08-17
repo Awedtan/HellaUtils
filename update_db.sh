@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 export PATH="/usr/bin:/home/daniel/.nvm/versions/node/v18.19.1/bin"
 
 if [ -e "/tmp/db" ]; then

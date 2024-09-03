@@ -144,7 +144,7 @@ if [[ $LOCAL != $REMOTE ]]; then
     gh pr create --title "[$DATE] Automated PR" --body "CN update for $DATE" --head "$BRANCH" --base "main"
 
     git switch main
-    git branch -D "$BRANCH
+    git branch -D $BRANCH
 
     echo "$(date) - CN assets updated"
     echo "======================="

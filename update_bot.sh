@@ -16,7 +16,7 @@ if [[ ! $LOCAL = $REMOTE ]]; then
     echo "$(date) - Start bot update - $REMOTE"
     git reset --hard
     git merge
-    npm ci
+    npm i
     sleep 5
     pm2 flush hellabot
     pm2 restart hellabot

@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+if [ -e "/tmp/cn" ]; then
+    exit
+else
+    touch "/tmp/cn"
+fi
+
 LOCAL=$(cat scripts/apk_url)
 REMOTE=$(node scripts/get_apk_src.js | grep .apk | head -n 1 | sed -E 's/.+<a href="https:\/\/pkg\.bili/https:\/\/pkg\.bili/' | sed -E 's/\.apk.+/\.apk/')
 DATE=$(date +"%Y-%m-%d")
@@ -149,3 +155,5 @@ if [[ $LOCAL != $REMOTE ]]; then
     echo "$(date) - CN assets updated"
     echo "======================="
 fi
+
+rm "/tmp/cn"

@@ -16,7 +16,7 @@ if [[ ! $LOCAL = $REMOTE ]]; then
     echo "$(date) - Start API update - $REMOTE"
     git reset --hard
     git merge
-    npm ci
+    npm i
     sleep 5
     pm2 flush hellaapi
     pm2 restart hellaapi

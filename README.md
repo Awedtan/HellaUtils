@@ -5,12 +5,17 @@ https://github.com/aelurum/AssetStudio/tree/ArknightsStudio
 https://github.com/isHarryh/Ark-Unpacker
 
 ## locations
+- char spine: `*/chararts/*.ab`
+- char skin spines: `Android/skinpack/*.ab`
+- char full arts: `*/chararts/*.ab`
+- char avatars: `*/spritepack/ui_char_avatar_*.ab`
+- char skills: `APK/spritepack/skill_icons_*.ab`
+- char modules: `*/spritepack/ui_equip_big_img_hub_13.ab`
+- char base skills: `*/spritepack/building_ui_buff_skills_h1_0.ab`
+- enemy spine: `APK/battle/prefabs/enemies`
 - rogue items: `Android/spritepack/*.ab`
 - sandbox stage previews: `Android/spritepack/*.ab`
 - skin groups: `APK/ui/skin_groups.ab`
-- char spine: `*/chararts/*.ab`
-- char skin spines: `Android/skinpack/*.ab`
-- enemy spine: `APK/battle/prefabs/enemies`
 - stage previews: `*/arts/ui/*.ab`
 
 ## how 2 get stage preview images

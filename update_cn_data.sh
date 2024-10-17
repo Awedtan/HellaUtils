@@ -10,14 +10,14 @@ fi
 LOCAL=$(cat scripts/apk_url)
 REMOTE=$(node scripts/get_apk_src.js | grep .apk | head -n 1 | sed -E 's/.+<a href="https:\/\/pkg\.bili/https:\/\/pkg\.bili/' | sed -E 's/\.apk.+/\.apk/')
 DATE=$(date +"%Y-%m-%d")
-FOLDER=~/arknights/$DATE
+ARK_FOLDER=~/arknights/$DATE
 
 if [[ $LOCAL != $REMOTE ]]; then
     echo "$(date) - Start CN data update - $REMOTE"
     echo $REMOTE > "scripts/apk_url"
-    mkdir -p $FOLDER
+    mkdir -p $ARK_FOLDER
 
-    wget $REMOTE -O $FOLDER/arknights.apk
+    wget $REMOTE -O $ARK_FOLDER/arknights.apk
 
     # if [ ! -d "$HOME/.android/avd/arknights.avd" ]; then
     sdkmanager platform-tools emulator "platforms;android-24" "system-images;android-24;google_apis;x86_64"
@@ -33,7 +33,7 @@ if [[ $LOCAL != $REMOTE ]]; then
     sleep 180
     adb root
     echo 'Pushing apk'
-    adb push $FOLDER/arknights.apk /data/
+    adb push $ARK_FOLDER/arknights.apk /data/
     echo 'Installing apk'
     adb shell pm install /data/arknights.apk
     sleep 15
@@ -69,12 +69,12 @@ if [[ $LOCAL != $REMOTE ]]; then
     sleep 10
 
     echo 'Pull files'
-    adb pull /storage/emulated/0/Android/data/com.hypergryph.arknights.bilibili/files/AB/Android $FOLDER
+    adb pull /storage/emulated/0/Android/data/com.hypergryph.arknights.bilibili/files/AB/Android $ARK_FOLDER
 
     adb emu kill
 
-    mkdir $FOLDER/apk
-    unzip -q $FOLDER/arknights.apk -d $FOLDER/apk
+    mkdir $ARK_FOLDER/apk
+    unzip -q $ARK_FOLDER/arknights.apk -d $ARK_FOLDER/apk
 
     echo "$(date) - CN data updated"
     echo "$(date) - Start CN assets update - $REMOTE"
@@ -82,23 +82,76 @@ if [[ $LOCAL != $REMOTE ]]; then
     # python3 -m venv venv
     # venv/bin/pip install unitypy numpy
 
-    mkdir -p $FOLDER/assets/sandboxstages $FOLDER/extracted/sandboxstages
-    mkdir $FOLDER/assets/sandboxitems $FOLDER/extracted/sandboxitems
-    mkdir $FOLDER/assets/rogueitems $FOLDER/extracted/rogueitems
-    mkdir $FOLDER/assets/skingroups $FOLDER/extracted/skingroups
-    mkdir -p $FOLDER/assets/spine/operator $FOLDER/extracted/spine/operator
-    mkdir $FOLDER/assets/spine/enemy $FOLDER/extracted/spine/enemy
-    mkdir $FOLDER/assets/stages $FOLDER/extracted/stages
+    FILES=Android/chararts/*.ab
+    FOLDER=operator/arts
+    mkdir -p $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
+    cp -f $ARK_FOLDER/apk/assets/AB/$FILES $ARK_FOLDER/assets/$FOLDER
+    cp -f $ARK_FOLDER/$FILES $ARK_FOLDER/assets/$FOLDER
+    ArknightsStudioCLI $ARK_FOLDER/assets/$FOLDER --filter-by-text characters -t sprite -g none --log-level warning -o $ARK_FOLDER/extracted/operator/arts
 
-    cp -f $FOLDER/Android/spritepack/sandbox*.ab $FOLDER/assets/sandboxstages
-    AssetStudioModCLI $FOLDER/assets/sandboxstages -t sprite -g none --log-level warning -o $FOLDER/extracted/sandboxstages
+    FILES=Android/spritepack/ui_char_avatar_*.ab
+    FOLDER=operator/avatars
+    mkdir -p $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
+    cp -f $ARK_FOLDER/apk/assets/AB/$FILES $ARK_FOLDER/assets/$FOLDER
+    cp -f $ARK_FOLDER/$FILES $ARK_FOLDER/assets/$FOLDER
+    ArknightsStudioCLI $ARK_FOLDER/assets/$FOLDER --filter-by-text char_ -t sprite -g none --log-level warning -o $ARK_FOLDER/extracted/$FOLDER
 
-    cp -f $FOLDER/Android/spritepack/ui_roguelike*.ab $FOLDER/assets/rogueitems
-    AssetStudioModCLI $FOLDER/assets/rogueitems -t sprite -g none --log-level warning -o $FOLDER/extracted/rogueitems
+    FILES=Android/spritepack/building_ui_buff_skills_h1_0.ab
+    FOLDER=operator/bases
+    mkdir -p $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
+    cp -f $ARK_FOLDER/apk/assets/AB/$FILES $ARK_FOLDER/assets/$FOLDER
+    cp -f $ARK_FOLDER/$FILES $ARK_FOLDER/assets/$FOLDER
+    ArknightsStudioCLI $ARK_FOLDER/assets/$FOLDER --filter-by-text bskill -t sprite -g none --log-level warning -o $ARK_FOLDER/extracted/$FOLDER
 
-    cp -f $FOLDER/apk/assets/AB/Android/ui/skin_groups.ab $FOLDER/assets/skingroups
-    AssetStudioModCLI $FOLDER/assets/skingroups -t sprite -g none --log-level warning -o $FOLDER/extracted/skingroups
-    cd $FOLDER/extracted/skingroups
+    FILES=Android/spritepack/ui_equip_big_img_hub_*.ab
+    FOLDER=operator/modules
+    mkdir -p $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
+    cp -f $ARK_FOLDER/apk/assets/AB/$FILES $ARK_FOLDER/assets/$FOLDER
+    cp -f $ARK_FOLDER/$FILES $ARK_FOLDER/assets/$FOLDER
+    ArknightsStudioCLI $ARK_FOLDER/assets/$FOLDER --filter-by-text uniequip -t sprite -g none --log-level warning -o $ARK_FOLDER/extracted/$FOLDER
+
+    FILES=Android/spritepack/skill_icons_*.ab
+    FOLDER=operator/skills
+    mkdir -p $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
+    cp -f $ARK_FOLDER/apk/assets/AB/$FILES $ARK_FOLDER/assets/$FOLDER
+    cp -f $ARK_FOLDER/$FILES $ARK_FOLDER/assets/$FOLDER
+    ArknightsStudioCLI $ARK_FOLDER/assets/$FOLDER --filter-by-text skill_icon -t sprite -g none --log-level warning -o $ARK_FOLDER/extracted/$FOLDER
+
+    FILES=Android/spritepack/ui_roguelike*.ab
+    FOLDER=rogue/items
+    mkdir -p $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
+    cp -f $ARK_FOLDER/apk/assets/AB/$FILES $ARK_FOLDER/assets/$FOLDER
+    cp -f $ARK_FOLDER/$FILES $ARK_FOLDER/assets/$FOLDER
+    ArknightsStudioCLI $ARK_FOLDER/assets/$FOLDER -t sprite -g none --log-level warning -o $ARK_FOLDER/extracted/$FOLDER
+
+    FILES=Android/ui/sandboxperm/[uc]common.ab
+    FOLDER=sandbox/items
+    mkdir -p $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
+    cp -f $ARK_FOLDER/apk/assets/AB/$FILES $ARK_FOLDER/assets/$FOLDER
+    cp -f $ARK_FOLDER/$FILES $ARK_FOLDER/assets/$FOLDER
+    ArknightsStudioCLI $ARK_FOLDER/assets/$FOLDER --filter-by-text itemicon -t sprite -g none --log-level warning -o $ARK_FOLDER/extracted/$FOLDER
+
+    FILES=Android/spritepack/sandbox*.ab
+    FOLDER=sandbox/stages
+    mkdir -p $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
+    cp -f $ARK_FOLDER/apk/assets/AB/$FILES $ARK_FOLDER/assets/$FOLDER
+    cp -f $ARK_FOLDER/$FILES $ARK_FOLDER/assets/$FOLDER
+    ArknightsStudioCLI $ARK_FOLDER/assets/$FOLDER -t sprite -g none --log-level warning -o $ARK_FOLDER/extracted/$FOLDER
+
+    FILES=Android/ui/sandboxv2/topics/[uc]sandbox_1.ab
+    FOLDER=sandbox/weather
+    mkdir -p $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
+    cp -f $ARK_FOLDER/apk/assets/AB/$FILES $ARK_FOLDER/assets/$FOLDER
+    cp -f $ARK_FOLDER/$FILES $ARK_FOLDER/assets/$FOLDER
+    ArknightsStudioCLI $ARK_FOLDER/assets/$FOLDER --filter-by-text weathertypeicons -t sprite -g none --log-level warning -o $ARK_FOLDER/extracted/$FOLDER
+
+    FILES=Android/ui/skin_groups.ab
+    FOLDER=skingroups
+    mkdir -p $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
+    cp -f $ARK_FOLDER/apk/assets/AB/$FILES $ARK_FOLDER/assets/$FOLDER
+    cp -f $ARK_FOLDER/$FILES $ARK_FOLDER/assets/$FOLDER
+    ArknightsStudioCLI $ARK_FOLDER/assets/$FOLDER -t sprite -g none --log-level warning -o $ARK_FOLDER/extracted/$FOLDER
+    cd $ARK_FOLDER/extracted/$FOLDER
     # remove 'year#' at start of filenames
     for file in *.png; do
         if [[ "$file" =~ ^[0-9]{4}#(.*) ]]; then
@@ -115,42 +168,90 @@ if [[ $LOCAL != $REMOTE ]]; then
     find . -name "*_deco.png" -type f -exec rm -f {} \;
     cd
 
-    cp -f $FOLDER/apk/assets/AB/Android/chararts/char*.ab $FOLDER/assets/spine/operator
-    cp -f $FOLDER/Android/chararts/char*.ab $FOLDER/assets/spine/operator
-    arknights/venv/bin/python3 scripts/charspine.py $FOLDER/assets/spine/operator $FOLDER/extracted/spine/operator
+    FILES=Android/battle/prefabs/enemies/enemy*.ab
+    FOLDER=spine/enemy
+    mkdir -p $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
+    cp -f $ARK_FOLDER/apk/assets/AB/$FILES $ARK_FOLDER/assets/$FOLDER
+    cp -f $ARK_FOLDER/$FILES $ARK_FOLDER/assets/$FOLDER
+    ArknightsStudioCLI $ARK_FOLDER/assets/$FOLDER -t tex2d,textAsset -g none --log-level warning -o $ARK_FOLDER/extracted/$FOLDER
+    ~/arknights/venv/bin/python3 ~/scripts/enemyspine.py $ARK_FOLDER/extracted/$FOLDER
+
+    FILES=Android/chararts/char*.ab
+    FOLDER=spine/operator
+    mkdir -p $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
+    cp -f $ARK_FOLDER/apk/assets/AB/$FILES $ARK_FOLDER/assets/$FOLDER
+    cp -f $ARK_FOLDER/$FILES $ARK_FOLDER/assets/$FOLDER
+    ~/arknights/venv/bin/python3 ~/scripts/charspine.py $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
     echo 'Exported operator spine assets'
 
-    cp -f $FOLDER/apk/assets/AB/Android/battle/prefabs/enemies/enemy*.ab $FOLDER/assets/spine/enemy
-    cp -f $FOLDER/Android/battle/prefabs/enemies/enemy*.ab $FOLDER/assets/spine/enemy
-    AssetStudioModCLI $FOLDER/assets/spine/enemy -t tex2d,textAsset -g none --log-level warning -o $FOLDER/extracted/spine/enemy
-    arknights/venv/bin/python3 scripts/enemyspine.py $FOLDER/extracted/spine/enemy
+    FILES=Android/arts/ui/stage_mappreview*.ab
+    FOLDER=stages
+    mkdir -p $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
+    cp -f $ARK_FOLDER/apk/assets/AB/$FILES $ARK_FOLDER/assets/$FOLDER
+    cp -f $ARK_FOLDER/$FILES $ARK_FOLDER/assets/$FOLDER
+    ArknightsStudioCLI $ARK_FOLDER/assets/$FOLDER -t sprite -g none --log-level warning -o $ARK_FOLDER/extracted/$FOLDER
 
-    cp -f $FOLDER/apk/assets/AB/Android/arts/ui/stage_mappreview*.ab $FOLDER/assets/stages
-    cp -f $FOLDER/Android/arts/ui/stage_mappreview*.ab $FOLDER/assets/stages
-    AssetStudioModCLI $FOLDER/assets/stages -t sprite -g none --log-level warning -o $FOLDER/extracted/stages
-
-    cp -f $FOLDER/Android/ui/sandboxperm/[uc]common.ab $FOLDER/assets/sandboxitems
-    AssetStudioModCLI $FOLDER/assets/sandboxitems --filter-by-text itemicon -t sprite -g none --log-level warning -o $FOLDER/extracted/sandboxitems
-
-    cp -f $FOLDER/Android/ui/sandboxv2/topics/[uc]sandbox_1.ab $FOLDER/assets/sandboxweather
-    AssetStudioModCLI $FOLDER/assets/sandboxweather --filter-by-text weathertypeicons -t sprite -g none --log-level warning -o $FOLDER/extracted/sandboxweather
-
-    BRANCH=cn-$DATE
-    cd HellaAssets
+    cd ~/HellaAssets
     git switch main
-    git fetch
+    git add .
     git reset --hard
     git pull
-    git checkout -b $BRANCH
 
-    cp -r $FOLDER/extracted/* .
-    git add .
-    git commit -m "[$DATE] Automated commit"
-    git push --set-upstream origin $BRANCH
-    gh pr create --title "[$DATE] Automated PR" --body "CN update for $DATE" --head "$BRANCH" --base "main"
+    BRANCH=cn-$DATE-operator
+    git switch main
+    git checkout -b $BRANCH
+    cp -r $ARK_FOLDER/extracted/operator .
+    git add operator
+    git commit -m "[$DATE] Automated PR - Operator" && \
+    git push --set-upstream origin $BRANCH && \
+    gh pr create --title "[$DATE] Automated PR - Operator" --body "CN update for $DATE" --head "$BRANCH" --base "main"
+
+    BRANCH=cn-$DATE-rogue
+    git switch main
+    git checkout -b $BRANCH
+    cp -r $ARK_FOLDER/extracted/rogue .
+    git add rogue
+    git commit -m "[$DATE] Automated PR - Rogue" && \
+    git push --set-upstream origin $BRANCH && \
+    gh pr create --title "[$DATE] Automated PR - Rogue" --body "CN update for $DATE" --head "$BRANCH" --base "main"
+
+    BRANCH=cn-$DATE-sandbox
+    git switch main
+    git checkout -b $BRANCH
+    cp -r $ARK_FOLDER/extracted/sandbox .
+    git add sandbox
+    git commit -m "[$DATE] Automated PR - Sandbox" && \
+    git push --set-upstream origin $BRANCH && \
+    gh pr create --title "[$DATE] Automated PR - Sandbox" --body "CN update for $DATE" --head "$BRANCH" --base "main"
+
+    BRANCH=cn-$DATE-skingroups
+    git switch main
+    git checkout -b $BRANCH
+    cp -r $ARK_FOLDER/extracted/skingroups .
+    git add skingroups
+    git commit -m "[$DATE] Automated PR - Skingroup" && \
+    git push --set-upstream origin $BRANCH && \
+    gh pr create --title "[$DATE] Automated PR - Skingroup" --body "CN update for $DATE" --head "$BRANCH" --base "main" --label "skingroup"
+
+    BRANCH=cn-$DATE-spine
+    git switch main
+    git checkout -b $BRANCH
+    cp -r $ARK_FOLDER/extracted/spine .
+    git add spine
+    git commit -m "[$DATE] Automated PR - Spine" && \
+    git push --set-upstream origin $BRANCH && \
+    gh pr create --title "[$DATE] Automated PR - Spine" --body "CN update for $DATE" --head "$BRANCH" --base "main" --label "spine"
+
+    BRANCH=cn-$DATE-stages
+    git switch main
+    git checkout -b $BRANCH
+    cp -r $ARK_FOLDER/extracted/stages .
+    git add stages
+    git commit -m "[$DATE] Automated PR - Stage" && \
+    git push --set-upstream origin $BRANCH && \
+    gh pr create --title "[$DATE] Automated PR - Stage" --body "CN update for $DATE" --head "$BRANCH" --base "main" --label "stage"
 
     git switch main
-    git branch -D $BRANCH
 
     echo "$(date) - CN assets updated"
     echo "======================="

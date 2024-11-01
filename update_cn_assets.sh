@@ -111,6 +111,13 @@ mkdir -p $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
 cp -f $ARK_FOLDER/apk/assets/AB/$FILES $ARK_FOLDER/assets/$FOLDER || :
 cp -f $ARK_FOLDER/$FILES $ARK_FOLDER/assets/$FOLDER || :
 ~/arknights/venv/bin/python3 ~/scripts/charspine.py $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
+
+FILES=Android/skinpack/char*.ab
+FOLDER=spine/operator
+mkdir -p $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
+cp -f $ARK_FOLDER/apk/assets/AB/$FILES $ARK_FOLDER/assets/$FOLDER || :
+cp -f $ARK_FOLDER/$FILES $ARK_FOLDER/assets/$FOLDER || :
+~/arknights/venv/bin/python3 ~/scripts/charspine.py $ARK_FOLDER/assets/$FOLDER $ARK_FOLDER/extracted/$FOLDER
 echo 'Exported operator spine assets'
 
 FILES=Android/arts/ui/stage_mappreview*.ab

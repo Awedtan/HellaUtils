@@ -140,7 +140,7 @@ cp -r $ARK_FOLDER/extracted/operator .
 git add operator
 git commit -m "[$DATE] Automated PR - Operator" && \
 git push --set-upstream origin $BRANCH && \
-gh pr create --title "[$DATE] Automated PR - Operator" --body "CN update for $DATE" --head "$BRANCH" --base "main"
+gh pr create --title "[$DATE] Automated PR - Operator" --body "CN update for $DATE" --head "$BRANCH" --base "main" --label "operator"
 
 BRANCH=cn-$DATE-rogue
 git switch main
